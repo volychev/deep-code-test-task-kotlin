@@ -2,6 +2,10 @@ server:
   port: ${PORT:8080}
   address: ${HOST:0.0.0.0}
 
+app:
+  api:
+    prefix: api
+
 spring:
   application:
     name: subscription
