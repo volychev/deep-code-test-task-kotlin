@@ -1,0 +1,33 @@
+services:
+  subscription-api:
+    build: .
+    env_file: ".env"
+    container_name: "subscription-api"
+    command: >
+      java -jar build/libs/subscription-0.0.1-SNAPSHOT.jar
+      --server.address=${HOST}
+      --server.port=${PORT}
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - "subscription-postgres"
+    networks:
+      - app-net
+    restart: always
+
+  subscription-postgres:
+    image: "postgres:16"
+    env_file: ".env"
+    container_name: "subscription-postgres"
+    volumes:
+      - "subscription-postgres:/var/lib/postgresql/data/"
+    networks:
+      - app-net
+    restart: always
+
+volumes:
+  subscription-postgres:
+
+networks:
+  app-net:
+    external: true
